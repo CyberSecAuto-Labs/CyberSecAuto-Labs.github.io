@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="CyberSecAuto Labs: cybersecurity automation and AI-assisted security tooling. Open-source tools for vulnerability management and security engineering." />
+  <title>CyberSecAuto Labs</title>
+  <link rel="icon" href="assets/CSAL_logo_small_transparent.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div class="container">
+
+    <header>
+      <img class="logo-img" src="assets/CSAL_logo_small_transparent_white.png" alt="CyberSecAuto Labs (CSAL)" />
+      <h1 class="sr-only">CyberSecAuto Labs</h1>
+      <p>Cybersecurity automation and AI-assisted security tooling</p>
+    </header>
+
+    <section class="about">
+      <h2>About</h2>
+      <p>
+        CSAL focuses on security automation and AI-assisted vulnerability management,
+        building tooling that integrates with modern AI workflows to surface, triage,
+        and remediate security findings at scale. Our work is open-source and oriented
+        toward practitioners who operate in complex, heterogeneous environments.
+      </p>
+    </section>
+
+    <section class="projects">
+      <h2>Projects</h2>
+      <ul class="project-list">
+        <li class="project-item" data-repo="CyberSecAuto-Labs/openvas-mcp">
+          <div class="project-header">
+            <span class="project-name">
+              <a href="https://github.com/CyberSecAuto-Labs/openvas-mcp" target="_blank" rel="noopener">OpenVAS-MCP</a>
+            </span>
+          </div>
+          <p class="project-desc">
+            Self-hosted MCP server that gives AI agents structured access to OpenVAS&nbsp;/&nbsp;Greenbone,
+            with no telemetry and credential isolation between clients and the scanner.
+            A thin bridge that returns raw scan data; analysis and reporting belong in the agent or a platform built on top.
+          </p>
+        </li>
+        <li class="project-item">
+          <div class="project-header">
+            <span class="project-name">netaudit</span>
+            <span class="badge badge-soon">coming soon</span>
+          </div>
+          <p class="project-desc">
+            CLI tool for auditing outbound network activity during test execution.
+            Define what connections are allowed, run your tests, and get a clean pass/fail report.
+            Makes unintended network behavior visible and enforceable in CI.
+          </p>
+        </li>
+        <li class="project-item">
+          <div class="project-header">
+            <span class="project-name">AiAVM</span>
+            <span class="badge badge-soon">coming soon</span>
+          </div>
+          <p class="project-desc">
+            AI Automated Vulnerability Management. A platform that orchestrates vulnerability scans,
+            processes results, prioritizes risks, and generates actionable tickets and reports.
+            Focuses on the operational layer between vulnerability detection and remediation.
+          </p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="links">
+      <h2>Contact</h2>
+      <ul class="link-list">
+        <li>
+          <span class="link-label">github</span>
+          <a href="https://github.com/CyberSecAuto-Labs" target="_blank" rel="noopener">github.com/CyberSecAuto-Labs</a>
+        </li>
+        <li>
+          <span class="link-label">email</span>
+          <a href="mailto:contact@cybersecauto-labs.org">contact@cybersecauto-labs.org</a>
+        </li>
+      </ul>
+    </section>
+
+    <footer>
+      <p>Maintained by CyberSecAuto Labs, 2026</p>
+    </footer>
+
+  </div>
+
+  <script>
+    document.querySelectorAll('.project-item[data-repo]').forEach(async item => {
+      const repo = item.dataset.repo;
+      try {
+        const res = await fetch(`https://api.github.com/repos/${repo}/releases/latest`);
+        if (!res.ok) return;
+        const { tag_name } = await res.json();
+        if (!tag_name) return;
+        const tag = document.createElement('span');
+        tag.className = 'badge badge-tag';
+        tag.textContent = tag_name;
+        item.querySelector('.project-header').appendChild(tag);
+      } catch (_) {}
+    });
+  </script>
+
+</body>
+</html>
