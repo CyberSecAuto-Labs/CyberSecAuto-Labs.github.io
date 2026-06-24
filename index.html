@@ -93,7 +93,6 @@
             <span class="project-name">
               <a href="https://github.com/CyberSecAuto-Labs/aimd" target="_blank" rel="noopener noreferrer">aimd</a>
             </span>
-            <span class="badge badge-wip">wip</span>
           </div>
           <p class="project-desc">
             Manage AI context files (CLAUDE.md, AGENTS.md, .cursor/rules) as private overlays
@@ -147,9 +146,10 @@
     document.querySelectorAll('.project-item[data-repo]').forEach(async item => {
       const repo = item.dataset.repo;
       try {
-        const res = await fetch(`https://api.github.com/repos/${repo}/releases/latest`);
+        const res = await fetch(`https://api.github.com/repos/${repo}/releases?per_page=1`);
         if (!res.ok) return;
-        const { tag_name } = await res.json();
+        const releases = await res.json();
+        const tag_name = releases[0]?.tag_name;
         if (!tag_name) return;
         const tag = document.createElement('span');
         tag.className = 'badge badge-tag';
